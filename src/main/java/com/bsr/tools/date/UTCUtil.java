@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  * @Title: UTCUtil
  * @Project:
  * @date: 2020-09-04 15:04
- * @author: zhanghaofei
+ * @author:
  * @Description:
  */
 public class UTCUtil {

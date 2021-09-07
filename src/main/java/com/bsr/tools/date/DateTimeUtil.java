@@ -8,7 +8,7 @@ import java.time.LocalDate;
  * @Title: LocalUtil
  * @Project:
  * @date: 2020-09-04 17:48
- * @author: zhanghaofei
+ * @author:
  * @Description:
  */
 public class DateTimeUtil {
@@ -25,5 +25,4 @@ public class DateTimeUtil {
         }
         return ld;
     }
-
 }
