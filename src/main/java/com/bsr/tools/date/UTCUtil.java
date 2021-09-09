@@ -8,12 +8,6 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * UTC时间工具
- *
- * @Title: UTCUtil
- * @Project:
- * @date: 2020-09-04 15:04
- * @author:
- * @Description:
  */
 public class UTCUtil {
 
@@ -30,6 +24,13 @@ public class UTCUtil {
         return dateTimeToUTC(ldt, zone);
     }
 
+    /**
+     * 获取DateTime对象的UTC时间(单位：毫秒)
+     *
+     * @param localDateTime
+     * @param zone
+     * @return
+     */
     public static long dateTimeToUTC(LocalDateTime localDateTime, ZoneOffset zone) {
         return localDateTime.toInstant(zone).getEpochSecond() * 1000L;
     }
