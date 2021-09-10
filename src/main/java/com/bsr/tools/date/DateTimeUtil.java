@@ -3,13 +3,7 @@ package com.bsr.tools.date;
 import java.time.LocalDate;
 
 /**
- * Copyright  2020Yoongoo
- *
- * @Title: LocalUtil
- * @Project:
- * @date: 2020-09-04 17:48
- * @author:
- * @Description:
+ * 时间日期工具
  */
 public class DateTimeUtil {
     public static LocalDate dateChange(Long yearToAdd, Long monthToAdd, Long dayToAdd) {
