@@ -5,23 +5,17 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * 时间字符串工具
- *
- * @Title: StringTools
- * @Project:
- * @date: 2020-09-03 16:03
- * @author:
- * @Description:
  */
 public class StringUtil {
 
     /**
-     * 输出间隔参数的日期
+     * 按时间格式获取字符串
      *
      * @param localDate 日期
      * @param formatter 时间格式
      * @return
      */
-    public static String changeDateToDateString(LocalDate localDate, String formatter) {
+    public static String localDateToString(LocalDate localDate, String formatter) {
         return localDate.format(DateTimeFormatter.ofPattern(formatter));
     }
 
