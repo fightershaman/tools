@@ -22,6 +22,7 @@ public class StreamUtil {
         byte[] bytes = new byte[1024 * 8];
         while ((j = inputStream.read(bytes)) > 0) {
             outputStream.write(bytes);
+            outputStream.flush();
             i += j;
         }
         return i;
