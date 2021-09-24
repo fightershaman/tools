@@ -1,7 +1,9 @@
-package com.bsr.tools.document;
+package com.bsr.tools.file;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * 文件夹工具类
