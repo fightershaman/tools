@@ -1,8 +1,11 @@
 package com.bsr.tools.file;
 
-import java.nio.file.attribute.PosixFilePermission;
-import java.nio.file.attribute.PosixFilePermissions;
-import java.util.HashSet;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.*;
 import java.util.Set;
 
 /**
@@ -16,14 +19,7 @@ public class UnixFilePermissionUtil {
      * @return
      */
     public static Set<PosixFilePermission> mode(String permission) {
-        Set<PosixFilePermission> set = null;
-        try {
-            set = PosixFilePermissions.fromString(permission);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            set = new HashSet<>();
-        }
-        return set;
+        return PosixFilePermissions.fromString(permission);
     }
 
     /**
@@ -33,21 +29,55 @@ public class UnixFilePermissionUtil {
      * @return
      */
     public static Set<PosixFilePermission> numericMode(String permission) {
-        Set<PosixFilePermission> set = null;
         if (permission.length() == 3) {
-            try {
-                String permissionString = permissionNumericToString(permission.charAt(0)) + permissionNumericToString(permission.charAt(1)) + permissionNumericToString(permission.charAt(2));
-                set = mode(permissionString);
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-                set = new HashSet<>();
-            }
+            String permissionString = permissionNumericToString(permission.charAt(0)) + permissionNumericToString(permission.charAt(1)) + permissionNumericToString(permission.charAt(2));
+            return mode(permissionString);
         } else {
-            set = new HashSet<>();
+            throw new IllegalArgumentException("Invalid mode");
         }
-        return set;
     }
 
+    /**
+     * 修改文件用户
+     *
+     * @param pathString
+     * @param userName
+     * @throws IOException
+     */
+    public static void changeOwner(String pathString, String userName) throws IOException {
+        changeOwner(pathString, userName, userName);
+    }
+
+    /**
+     * 修改文件用户和用户组
+     *
+     * @param pathString
+     * @param userName
+     * @param groupName
+     * @throws IOException
+     */
+    public static void changeOwner(String pathString, String userName, String groupName) throws IOException {
+        Path path = Paths.get(pathString);
+        UserPrincipalLookupService service = FileSystems.getDefault().getUserPrincipalLookupService();
+        UserPrincipal userPrincipal = service.lookupPrincipalByName(userName);
+        GroupPrincipal groupPrincipal = service.lookupPrincipalByGroupName(groupName);
+        PosixFileAttributeView pfav = Files.getFileAttributeView(path, PosixFileAttributeView.class);
+        pfav.setOwner(userPrincipal);
+        pfav.setGroup(groupPrincipal);
+    }
+
+    /**
+     * 修改文件权限
+     *
+     * @param pathString
+     * @param permissionSet
+     * @throws IOException
+     */
+    public static void changeMode(String pathString, Set<PosixFilePermission> permissionSet) throws IOException {
+        Path path = Paths.get(pathString);
+        PosixFileAttributeView pfav = Files.getFileAttributeView(path, PosixFileAttributeView.class);
+        pfav.setPermissions(permissionSet);
+    }
 
     private static String permissionNumericToString(char c) {
         switch (c) {
