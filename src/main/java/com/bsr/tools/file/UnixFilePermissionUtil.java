@@ -40,8 +40,8 @@ public class UnixFilePermissionUtil {
     /**
      * 修改文件用户
      *
-     * @param pathString
-     * @param userName
+     * @param pathString 文件地址
+     * @param userName   用户
      * @throws IOException
      */
     public static void changeOwner(String pathString, String userName) throws IOException {
@@ -51,9 +51,9 @@ public class UnixFilePermissionUtil {
     /**
      * 修改文件用户和用户组
      *
-     * @param pathString
-     * @param userName
-     * @param groupName
+     * @param pathString 文件地址
+     * @param userName   用户
+     * @param groupName  用户分组
      * @throws IOException
      */
     public static void changeOwner(String pathString, String userName, String groupName) throws IOException {
@@ -69,8 +69,8 @@ public class UnixFilePermissionUtil {
     /**
      * 修改文件权限
      *
-     * @param pathString
-     * @param permissionSet
+     * @param pathString    文件地址
+     * @param permissionSet 权限集合
      * @throws IOException
      */
     public static void changeMode(String pathString, Set<PosixFilePermission> permissionSet) throws IOException {
@@ -79,6 +79,12 @@ public class UnixFilePermissionUtil {
         pfav.setPermissions(permissionSet);
     }
 
+    /**
+     * 权限数字字符转换成字符串
+     *
+     * @param c 数字字符
+     * @return 权限字符串
+     */
     private static String permissionNumericToString(char c) {
         switch (c) {
             case '0':
