@@ -1,7 +1,12 @@
 package com.bsr.tools.net;
 
+import com.bsr.tools.file.DirectoryUtil;
+import com.bsr.tools.file.FileUtil;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +29,23 @@ public class FTPUtil {
         FTPClient client = new FTPClient();
         client.connect(hostName, port);
         if (client.login(userName, password)) {
-
+            client.setControlEncoding("UTF-8");
             return client;
         } else {
             client.disconnect();
             return null;
         }
+    }
+
+    /**
+     * 关闭链接
+     *
+     * @param client
+     * @throws IOException
+     */
+    public static void close(FTPClient client) throws IOException {
+        client.logout();
+        client.disconnect();
     }
 
     /**
@@ -40,14 +56,74 @@ public class FTPUtil {
      * @throws IOException
      */
     public static List<String> dir(FTPClient client) throws IOException {
-        List<String> nameList = null;
-        if (null != client) {
-            nameList = new ArrayList<>();
-            String[] names = client.listNames();
-            for (String name : names) {
-                nameList.add(new String(name.getBytes(client.getControlEncoding()), "UTF-8"));
-            }
+        List<String> nameList = new ArrayList<>();
+        String[] names = client.listNames();
+        for (String name : names) {
+            nameList.add(name);
         }
         return nameList;
+    }
+
+    /**
+     * 获取ftp当前路径下的文件夹
+     *
+     * @param client ftp客户端
+     * @return 文件夹名集合
+     * @throws IOException
+     */
+    public static List<String> dirDirectory(FTPClient client) throws IOException {
+        List<String> nameList = new ArrayList<>();
+        FTPFile[] directories = client.listDirectories();
+        for (FTPFile directory : directories) {
+            nameList.add(directory.getName());
+        }
+        return nameList;
+    }
+
+    /**
+     * 切换目录
+     *
+     * @param client ftp客户端
+     * @param path   路径
+     * @return
+     * @throws IOException
+     */
+    public static boolean cd(FTPClient client, String path) throws IOException {
+        return client.changeWorkingDirectory(path);
+    }
+
+    /**
+     * 下载文件
+     *
+     * @param client        ftp客户端
+     * @param fileName      文件名
+     * @param directoryPath 本地存储路径
+     * @return
+     * @throws IOException
+     */
+    public static boolean download(FTPClient client, String fileName, String directoryPath) throws IOException {
+        DirectoryUtil.existsOrCreate(directoryPath);
+        if (!directoryPath.endsWith(FileUtil.separator)) {
+            directoryPath += FileUtil.separator;
+        }
+        try (FileOutputStream fos = new FileOutputStream(directoryPath + fileName)) {
+            return client.retrieveFile(fileName, fos);
+        }
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param client   ftp客户端
+     * @param filePath 文件路径
+     * @return
+     * @throws IOException
+     */
+    public static boolean upload(FTPClient client, String filePath) throws IOException {
+        String[] strs = filePath.split(FileUtil.separator);
+        String fileName = strs[strs.length - 1];
+        try (FileInputStream fis = new FileInputStream(filePath)) {
+            return client.storeFile(fileName, fis);
+        }
     }
 }
