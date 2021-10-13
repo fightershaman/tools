@@ -126,4 +126,16 @@ public class FTPUtil {
             return client.storeFile(fileName, fis);
         }
     }
+
+    /**
+     * 删除ftp服务器上的文件
+     *
+     * @param client   ftp客户端
+     * @param fileName 文件名
+     * @return
+     * @throws IOException
+     */
+    public static boolean remove(FTPClient client, String fileName) throws IOException {
+        return client.deleteFile(fileName);
+    }
 }
