@@ -1,4 +1,4 @@
-package com.bsr.tools.date;
+package com.bsr.tools.time;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
