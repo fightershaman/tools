@@ -23,4 +23,31 @@ public class StringUtil {
     public static boolean isBlank(String str) {
         return str == null || "".equals(str.trim());
     }
+
+    /**
+     * 截取字符串中间部分
+     *
+     * @param str
+     * @param prefix
+     * @param suffix
+     * @return
+     */
+    public static String intercept(String str, String prefix, String suffix) {
+        int pre = str.indexOf(prefix);
+        if (pre < 0) {
+            return null;
+        }
+        int suf = str.indexOf(suffix, pre);
+        if (suf < 0) {
+            return null;
+        }
+        int preLength = prefix.length();
+        str = str.substring(pre + preLength, suf);
+        int index = str.lastIndexOf(prefix);
+        if (index >= 0) {
+            str = str.substring(index + preLength);
+        }
+        return str;
+    }
+
 }
