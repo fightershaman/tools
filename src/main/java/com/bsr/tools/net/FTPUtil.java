@@ -18,7 +18,7 @@ public class FTPUtil {
     /**
      * 获取ftp client
      *
-     * @param hostName 域名
+     * @param host 域名
      * @param port     端口
      * @param userName 登录用户
      * @param password 用户密码
