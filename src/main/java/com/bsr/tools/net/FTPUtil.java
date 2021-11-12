@@ -25,9 +25,9 @@ public class FTPUtil {
      * @return
      * @throws IOException
      */
-    public static FTPClient getClient(String hostName, int port, String userName, String password) throws IOException {
+    public static FTPClient getClient(String host, int port, String userName, String password) throws IOException {
         FTPClient client = new FTPClient();
-        client.connect(hostName, port);
+        client.connect(host, port);
         if (client.login(userName, password)) {
             client.setControlEncoding("UTF-8");
             return client;

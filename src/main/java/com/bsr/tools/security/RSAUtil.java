@@ -18,7 +18,7 @@ import java.security.spec.X509EncodedKeySpec;
  * RSA工具类
  */
 public class RSAUtil {
-    public final static String ALGORITHM = "RSA";
+    private final static String ALGORITHM = "RSA";
 
     /**
      * 生成一组RSA密钥
