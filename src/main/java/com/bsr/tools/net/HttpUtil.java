@@ -42,7 +42,10 @@ public class HttpUtil {
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setConnectTimeout(30 * 1000);
         connection.setReadTimeout(60 * 1000);
+        connection.setRequestProperty("accept", "*/*");
         connection.setRequestProperty("Content-Type", "application/json;utf-8");
+        connection.setRequestProperty("Connection", "Keep-Alive");
+        connection.setRequestProperty("Charset", "UTF-8");
         connection.connect();
         if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
             StringBuilder builder = new StringBuilder();
@@ -65,7 +68,10 @@ public class HttpUtil {
         connection.setRequestMethod("POST");
         connection.setConnectTimeout(30 * 1000);
         connection.setReadTimeout(60 * 1000);
+        connection.setRequestProperty("accept", "*/*");
         connection.setRequestProperty("Content-Type", "application/json;utf-8");
+        connection.setRequestProperty("Connection", "Keep-Alive");
+        connection.setRequestProperty("Charset", "UTF-8");
         connection.setDoInput(true);
         connection.setDoOutput(true);
         Gson gson = new Gson();
