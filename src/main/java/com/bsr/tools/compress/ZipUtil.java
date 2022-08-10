@@ -6,10 +6,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class ZipUtil {
-    public static void main(String[] args) throws IOException {
-        //unzip("./avatar_imag.zip", "./");
-        zip("./","/home/zhf/zhf/tools/src");
-    }
 
     public static void zip(String zipPath, String inPath) {
         File inFile = new File(inPath);
