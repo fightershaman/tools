@@ -41,11 +41,11 @@ public class HttpClient {
     protected int validateAfterInactivityTime = 60000;
     private int maxPerRoute = 500;
 
-    private HttpClient() {
-
+    private HttpClient() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+        init();
     }
 
-    public static HttpClient getInstance() {
+    public static HttpClient getInstance() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         if (instance == null) {
             synchronized (instance) {
                 if (instance == null) {
