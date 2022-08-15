@@ -18,6 +18,17 @@ import java.util.StringJoiner;
 
 public class HttpUtil {
 
+    /**
+     * get请求
+     *
+     * @param path  get请求地址
+     * @param param get请求参数
+     * @return
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws NoSuchProviderException
+     * @throws KeyManagementException
+     */
     public static String get(String path, Map<String, Object> param) throws IOException, NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException {
         String url = path;
         if (param.size() > 0) {
@@ -59,6 +70,17 @@ public class HttpUtil {
         return null;
     }
 
+    /**
+     * post请求
+     *
+     * @param path  post服务地址
+     * @param param post请求参数
+     * @return
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws NoSuchProviderException
+     * @throws KeyManagementException
+     */
     public static String post(String path, Map<String, Object> param) throws IOException, NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException {
         HttpURLConnection connection = (HttpURLConnection) new URL(path).openConnection();
         connection.setRequestMethod("POST");
